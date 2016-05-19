@@ -5,7 +5,7 @@ variable "master_state_file"  {default = "terraform.tfstate" }
 
 provider "aws" {
 	region  = "${var.region}"
-	profile = "default"
+	profile = "deafault"
 }
 
 resource "terraform_remote_state" "master_state" {

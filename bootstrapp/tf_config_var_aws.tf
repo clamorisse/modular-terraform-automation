@@ -3,5 +3,6 @@ variable "tf_region" {
 }
 
 provider "aws" {
-	region = "${var.tf_region}"
+	region  = "${var.tf_region}"
+	profile = "default"
 }
