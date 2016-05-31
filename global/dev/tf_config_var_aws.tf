@@ -1,6 +1,8 @@
 variable "region"             {default = "us-east-1"}
 variable "tf_s3_bucket"       {default = "tf_infra_bucket"}
 variable "master_state_file"  {default = "terraform.tfstate" }
+variable "project" {default = "roses" }
+variable "env"	   { default = "dev"  }
 
 
 provider "aws" {
@@ -14,6 +16,6 @@ resource "terraform_remote_state" "master_state" {
 	profile = "default"
 	bucket  = "${var.tf_s3_bucket}"
 	region  = "${var.region}"
-	key     = "${var.master_state_file}"
+	key     = "/${var.project}/${var.env}/${var.master_state_file}"
   }
 }

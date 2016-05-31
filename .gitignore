@@ -10,5 +10,6 @@ logs
 *.key
 *.pub
 *.pem
+*.swp
 Status API Training Shop Blog About
 

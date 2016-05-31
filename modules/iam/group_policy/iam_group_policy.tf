@@ -4,11 +4,11 @@
 
 variable "group_name"    { }
 variable "policy_name"    { }
-variable "policy"     { }
+variable "policy_arn"     { }
 
-resource "aws_iam_group_policy" "group-policy" {
+resource "aws_iam_policy_attachment" "group-policy" {
   name       = "${var.policy_name}" 
-  group      = "${var.group_name}"
-  policy     = "${var.policy}"
+  groups     = ["${var.group_name}"]
+  policy_arn = "${var.policy_arn}"
 }
 

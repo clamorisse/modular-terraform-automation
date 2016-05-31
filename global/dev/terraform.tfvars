@@ -10,3 +10,4 @@ dept       = "dev"    // Departments to which users belong
 prefix     = "admin-dev"
 
 users  =  "berenice,roman"
+admin-arn-policy = "arn:aws:iam::aws:policy/AdministratorAccess"

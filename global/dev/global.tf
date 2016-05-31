@@ -10,12 +10,12 @@ variable "dept"                        { }
 variable "prefix"                      { }
 
 variable "users"                       { }
-
+variable "admin-arn-policy"            { }
 # ------------------------------------------------------------
 
 // Creates all users in the list
 
-module "iam-users" {
+module "iam-admin-users" {
   source = "../../modules/iam/users"
 
   user_names  = "${var.users}"
@@ -23,7 +23,7 @@ module "iam-users" {
 
 // Creates the group for this list of users
 
-module "iam-group" {
+module "iam-admin-group" {
   source = "../../modules/iam/groups"
 
   group_name = "${var.prefix}-group"
@@ -31,13 +31,15 @@ module "iam-group" {
 
 // Attaches policy for this group
 
-module "iam-group-policy" {
+module "iam-admin-group-policy" {
 
   source = "../../modules/iam/group_policy"
 
-  group_name   = "${module.iam-group.res_iam_groups}"
+  group_name   = "${module.iam-admin-group.res_iam_groups}"
   policy_name  = "${var.priv}-policy"
-  policy = <<EOF
+  policy_arn   = "${var.admin-arn-policy}"
+
+/*  policy = <<EOF
 {
   "Version"   : "2012-10-17",
   "Statement" : [
@@ -49,6 +51,7 @@ module "iam-group-policy" {
   ]
 }
 EOF
+*/
 }
 
 // Associates users to this group
@@ -57,6 +60,6 @@ module "group-members" {
   source = "../../modules/iam/group_membership"
 
   membership_name = "membership-${var.prefix}-group"
-  group_name      = "${module.iam-group.res_iam_groups}"
-  user_names      = "${module.iam-users.users}"
+  group_name      = "${module.iam-admin-group.res_iam_groups}"
+  user_names      = "${module.iam-admin-users.users}"
 }
